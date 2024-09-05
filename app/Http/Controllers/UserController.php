@@ -16,6 +16,15 @@ class UserController extends Controller {
     return $lives;
   }
 
+    public function get_latest_livestreams() {
+      $lives = DB::select("SELECT * FROM `livestream` ORDER BY `created_at` DESC");
+      for ($i=0; $i<sizeof($lives); $i++) {
+        $live = $lives[$i];
+        $lives[$i]->user = DB::select('SELECT * FROM `user` WHERE `id`='.$live->user_id)[0];
+      }
+      return $lives;
+    }
+
   public function login(Request $request) {
     $email = $request->input('email');
     $password = $request->input('password');
@@ -78,7 +87,7 @@ class UserController extends Controller {
       DB::update("UPDATE `livestream` SET `title`='".$title."'");
       $liveID = $lives[0]->id;
     } else {
-      DB::insert("INSERT INTO `livestream` (`user_id`, `title`) VALUES (".$userID.", '".$title."')");
+      DB::insert("INSERT INTO `livestream` (`user_id`, `title`, `banner`) VALUES (".$userID.", '".$title."', 'img2.jpg')");
       $liveID = DB::getPdo()->lastInsertId();
     }
     return array(

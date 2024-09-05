@@ -28,3 +28,4 @@ Route::post('/get_lives_by_topic', [UserController::class, 'get_lives_by_topic']
 Route::get('/get_thai_lives', [UserController::class, 'get_thai_lives']);
 Route::get('/get_tieng_viet_lives', [UserController::class, 'get_tieng_viet_lives']);
 Route::post('/get_novice_missions', [UserController::class, 'get_novice_missions']);
+Route::get('/get_latest_livestreams', [UserController::class, 'get_latest_livestreams']);
